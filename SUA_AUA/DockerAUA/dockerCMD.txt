@@ -1,0 +1,27 @@
+
+## see image content
+sudo docker exec -it 5b5 /bin/bash
+
+## check container
+sudo docker ps
+sudo docker ps -a
+
+## check docker image
+sudo docker images
+sudo docker images -a
+
+## remove image
+sudo docker rmi 9ba
+
+## remove container
+sudo docker rm c22
+
+## stop docker
+sudo docker stop 9ba
+
+
+## build docker
+sudo docker build -t sipdev1 .
+
+## run docker
+sudo docker run sipdev1

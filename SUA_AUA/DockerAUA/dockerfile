@@ -1,0 +1,42 @@
+FROM ubuntu:18.04
+ENV DEBIAN_FRONTEND=noninteractive
+# setup user permission
+USER root
+
+# update packet and install dependance
+RUN apt-get update
+RUN apt-get install sudo
+# RUN sudo apt-get update
+RUN sudo apt-get install -y  python2.7\
+		python-pip \
+        wget
+# setup timezone
+RUN ln -fs /usr/share/zoneinfo/Asia/Taipei /etc/localtime
+RUN sudo apt-get install -y tzdata vim
+RUN dpkg-reconfigure --frontend noninteractive tzdata
+RUN wget http://download.ag-projects.com/agp-debian-gpg.key
+RUN sudo apt-key add agp-debian-gpg.key
+RUN echo "deb http://ag-projects.com/ubuntu bionic main" >> /etc/apt/sources.list
+RUN echo "deb-src http://ag-projects.com/ubuntu bionic main" >> /etc/apt/sources.list
+RUN sudo apt-get update
+
+RUN sudo apt-get install -y python-sipsimple
+RUN sudo apt-get install -y sipclients
+RUN sudo apt-get -y install libsqlite3-dev libssl-dev openssl
+# pip install
+RUN sudo -H pip install Flask Flask-Wtf Flask-Login Flask-SQLAlchemy requests python-etcd ntplib
+
+# different from every device
+COPY /YC/AUA1/.sipclient/ /root/.sipclient
+
+# different from every device
+COPY /YC/AUA1/AUA1/ home/AUA1
+
+# different from every device
+RUN sip-settings -a default device9@xxx.xxx.xxx.xxx
+
+# set entry dir
+WORKDIR home/AUA1
+
+#ENTRYPOINT bash
+CMD ["python2", "start.py"]
