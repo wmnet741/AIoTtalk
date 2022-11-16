@@ -1,0 +1,1 @@
+sip:asterisk@xxx.xxx.xxx.xxx:5566
